@@ -1,0 +1,170 @@
+#map {
+    height: 90%;
+    width: 100%;
+    border-bottom: 2px solid salmon;
+}
+
+#navigation {
+    text-align: center;
+}
+
+.pin-img {
+    max-width: 500px;
+    min-width: 300px;
+    width: 100%;
+    height: auto;
+}
+
+.topnav {
+    overflow: hidden;
+    background-color: #111827;
+}
+
+.topnav span {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 30px;
+}
+
+.topnav a {
+    float: right;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 30px;
+}
+
+#login-logout-button {
+    float: right;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 30px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer
+}
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111827;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 40px;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+.sidenav-image {
+    height: auto;
+    width: 100%;
+}
+
+.containerSidenav {
+    padding: 10%;
+}
+
+#main {
+    transition: margin-left .5s;
+    padding: 16px;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+    .sidenav a {
+        font-size: 18px;
+    }
+}
+
+.form-upload-pic {
+    color: white;
+}
+
+.form-upload-pic input {
+    display: block;
+}
+
+.upload-button-map {
+    background-color: #111827;
+    border: 1px solid transparent;
+    border-radius: .75rem;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    flex: 0 0 auto;
+    font-family: "Inter var", ui-sans-serif, system-ui, -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.5rem;
+    padding: .75rem 1.2rem;
+    text-align: center;
+    text-decoration: none #6B7280 solid;
+    text-decoration-thickness: auto;
+    transition-duration: .2s;
+    transition-property: background-color, border-color, color, fill, stroke;
+    transition-timing-function: cubic-bezier(.4, 0, 0.2, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: auto;
+}
+
+.upload-button-map:focus {
+    box-shadow: none;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+}
+
+@media (min-width: 768px) {
+    .upload-button-map {
+        padding: .75rem 1.5rem;
+    }
+}
+
+input[type=submit] {
+    background-color: white;
+    color: black;
+    border: 2px solid #e7e7e7;
+    font-size: 20px;
+}
+
+input[type=submit]:hover {
+    background-color: #e7e7e7;
+}
+
+.error {
+    margin: auto;
+    text-align: center;
+    width: 20%;
+    border: 3px solid red;
+    color: red;
+    padding: 10px;
+}
