@@ -1,7 +1,46 @@
 <?php
 
-function countFiles($directory) {
-    return count(scandir($directory)) - 2;
+// require_once '/var/www/html/pin-your-pics/htdocs/pin-your-pics/vendor/autoload.php';
+
+use Aws\S3\S3Client;  
+use Aws\Exception\AwsException;
+
+function listObjectsForUserFromS3Bucket($s3Client, $bucket, $directory) {
+    $iterator = $s3Client->getIterator('ListObjects', array(
+        'Bucket' => $bucket,
+        'Prefix' => $directory
+    ));
+    return $iterator;
+}
+
+function getObjectForUserFromS3Bucket($s3Client, $bucket, $key) {
+    return $s3Client->getObject(array(
+        'Bucket' => $bucket,
+        'Key' => $key
+    ));
+}
+
+function getUriForPicture($s3Client, $bucket, $path) {
+    $cmd = $s3Client->getCommand('GetObject', [
+        'Bucket' => $bucket,
+        'Key'    => $path
+    ]);
+    
+    //The period of availability
+    $request = $s3Client->createPresignedRequest($cmd, '+10 minutes');
+    
+    //Get the pre-signed URL
+    $signedUrl = (string) $request->getUri();
+    return $signedUrl;
+}
+
+function countFiles($s3Client, $bucket, $directory) {
+    $iterator = listObjectsForUserFromS3Bucket($s3Client, $bucket, $directory);
+    $count = 0;
+    foreach ($iterator as $object) {
+        $count++;
+    }
+    return $count;
 }
 
 function clearLatLngCookies() {

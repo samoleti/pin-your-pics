@@ -2,6 +2,10 @@
 session_start(); 
 
 require_once('utils.inc.php');
+require '../../../vendor/autoload.php';
+
+use Aws\S3\S3Client;  
+use Aws\Exception\AwsException;
 
 if (!isset($_SESSION['username'])) {
     header('location: ../login.php?error=You must be logged in to upload');
@@ -22,24 +26,33 @@ if (isset($_POST["submit"])) {
     $gpsDataFromCookies = readGpsLocationFromCookiesAndClear();
     $gpsData = $gpsDataFromPhoto ? $gpsDataFromPhoto : $gpsDataFromCookies;
 
-    var_dump($gpsDataFromPhoto);
-    var_dump($gpsDataFromCookies);
-    var_dump($gpsData);
-
     $user = $_SESSION['username'];
 
-    $destinationFolder = '../../uploads/' . $user . '/';
-    if (!file_exists($destinationFolder)) {
-        mkdir($destinationFolder, 0777, true);
+    $destinationFolder = 'uploads/' . $user . '/';
+
+    $bucket = '******';
+
+    // $IAM_KEY = ******;
+    // $IAM_SECRET = ******;
+    try {
+        $s3Client = new S3Client([
+            'region' => 'us-east-1',
+            'version' => 'latest'
+            // 'credentials' => array(
+            //     'key' => $IAM_KEY,
+            //     'secret' => $IAM_SECRET
+            // )
+        ]);
+        $fileName = countFiles($s3Client, $bucket, $destinationFolder) + 1;
+        $destinationPath = $destinationFolder . $fileName;
+        $result = $s3Client->putObject([
+            'Bucket' => $bucket,
+            'Key' => $destinationPath,
+            'SourceFile' => $tmpPath,
+        ]);
+    } catch (S3Exception $e) {
+        echo $e->getMessage() . "\n";
     }
-    
-    $fileName = countFiles($destinationFolder) + 1;
-
-    var_dump($destinationFolder);
-    var_dump($fileName);
-
-    $destinationPath = $destinationFolder . $fileName;
-    move_uploaded_file($tmpPath, $destinationPath);
 
     require('dbimage.inc.php');
 

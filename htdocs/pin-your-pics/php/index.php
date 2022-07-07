@@ -1,16 +1,36 @@
-<?php 
+<?php   
+    require_once '../../vendor/autoload.php';
+
+    use Aws\S3\S3Client;  
+    use Aws\Exception\AwsException;
+
+    error_reporting(E_ALL);
+    ini_set('display_errors', 'On');
     session_start();
     
     require('includes/dbimage.inc.php');
+    require('includes/utils.inc.php');
     $pics = array();
     if(!isset($_SESSION['username'])) {
         $pics = getPublicPhotos();
     } else $pics = getPublicPhotosAndPrivatePhotosForUser($_SESSION['username']);
+    $bucket = '*****';
+    // $IAM_KEY = ******;
+    // $IAM_SECRET = ******;
+    $s3Client = new S3Client([
+        'region' => 'us-east-1',
+        'version' => 'latest'
+        // 'credentials' => array(
+        //     'key' => $IAM_KEY,
+        //     'secret' => $IAM_SECRET
+        // )
+    ]);
     echo "<div class='loadPics'>";
     while ($temp = mysqli_fetch_array($pics)) {
         echo "<div class='current-pic'>";
-        $filePath = '../uploads/' . $temp['owner'] . '/' . $temp['file_name'];
-        echo "<img src='$filePath' class='pin-img'>";
+        $filePath = 'uploads/' . $temp['owner'] . '/' . $temp['file_name'];
+        $uri = getUriForPicture($s3Client, $bucket, $filePath);
+        echo "<img src='$uri' class='pin-img'>";
         echo "<div class='lat'>".$temp['lat']."</div>";
         echo "<div class='lng'>".$temp['lng']."</div>";
         echo "</div>";
