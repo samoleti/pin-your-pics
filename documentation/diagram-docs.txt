@@ -1,0 +1,24 @@
+@startuml
+!define AWSPuml https://raw.githubusercontent.com/awslabs/aws-icons-for-plantuml/master/dist
+!includeurl AWSPuml/AWSCommon.puml
+!includeurl AWSPuml/EndUserComputing/all.puml
+!includeurl AWSPuml/General/User.puml
+!includeurl AWSPuml/General/Multimedia.puml
+!includeurl AWSPuml/DeveloperTools/CodeCommit.puml
+!includeurl AWSPuml/Compute/EC2.puml
+!includeurl AWSPuml/Database/RDS.puml
+!includeurl AWSPuml/Compute/EC2Instances.puml
+!includeurl AWSPuml/Compute/EC2AMI.puml
+!includeurl AWSPuml/Storage/SimpleStorageServiceS3.puml
+
+User(user, "Student", "Course aws04, prof d-r Milen Petrov")
+WorkDocs(documents, "LaTeX Documentation", "AWS EC2, AWS RDS, AWS S3", "Course aws04, prof d-r Milen Petrov")
+EC2(EC2, "Runing PHP Apache server", "Elastic Compute Cloud", "Run Pin your pics Web app")
+RDS(RDS, "Connecting to MySQL RDS instance", "Relational Database Sevice RDS", "Manage data for users and pictures")
+SimpleStorageServiceS3(S3, "Store pictures", "Technology", "Storage and retrieval of images")
+
+user --> documents
+documents -> EC2
+EC2 <--> RDS
+EC2 <-> S3
+@enduml
